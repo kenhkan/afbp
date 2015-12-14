@@ -60,6 +60,8 @@ var fbpPins = [];
 // Lookup table for all the Pins. This is indexed by the Part ID, then by the
 // Pin name, and then the Pin index.
 var fbpPinsByName = [];
+// Is the main loop running?
+var fbpIsLoopRunning = false;
 
 
 // *** Scheduler *** //
@@ -80,9 +82,13 @@ function fbpMain(mainPartName, partConstructors) {
   fbpLoop();
 }
 
-// Try to find things to do by going through the queues.
+// Try to find things to do by going through the queues. There should only be
+// one loop running at a time. Check the `fbpIsLoopRunning` flag before
+// calling!
 function fbpLoop() {
   var i, l, pin, part, pinName, pinIndex, main, ip, hasProcessedIps;
+
+  fbpIsLoopRunning = true;
 
   do {
     // Assume there's no IP and invalidate if there is.
@@ -107,7 +113,7 @@ function fbpLoop() {
   // Only stop if this round has no more IPs.
   } while (hasProcessedIps);
 
-  // TODO: somehow make sure this loop runs again on new events.
+  fbpIsLoopRunning = false;
 }
 
 // Given a Pin, "walk" the pipeline and figure out which Part should be
@@ -131,6 +137,11 @@ function fbpPinCount(pinName) {
 
 function fbpSend(pinName, pinIndex, ip) {
   fbpPinsByName[fbpCurrentPartId][pinName][pinIndex].queue.push(ip);
+
+  // Sending an event triggers the loop, if not already running.
+  if (!fbpIsLoopRunning) {
+    fbpLoop();
+  }
 }
 
 function fbpOpenBrakcet() {
