@@ -46,7 +46,8 @@ function fbpPacket(type, value) {
 
 // *** Globals *** //
 
-var fbpConstructors = [];
+// Parts available to be instantiated, indexed by the Part name.
+var fbpConstructors = {};
 // The Part that FBP runtime functions refer to is dynamically scoped.
 var fbpCurrentPartId = -1;
 // Each Part instance has an integer ID, represented by the index of this
@@ -62,6 +63,12 @@ var fbpPins = [];
 var fbpPinsByName = [];
 // Is the main loop running?
 var fbpIsLoopRunning = false;
+
+
+// *** Constants *** //
+
+var fbpOpenBracket = new fbpPacket("open", null);
+var fbpCloseBracket = new fbpPacket("close", null);
 
 
 // *** Scheduler *** //
@@ -142,26 +149,6 @@ function fbpSend(pinName, pinIndex, ip) {
   if (!fbpIsLoopRunning) {
     fbpLoop();
   }
-}
-
-function fbpOpenBrakcet() {
-  return new fbpPacket("open", null);
-}
-
-function fbpIsOpenBracket(ip) {
-  return ip instanceof fbpPacket && ip.type === "open";
-}
-
-function fbpCloseBracket() {
-  return new fbpPacket("close", null);
-}
-
-function fbpIsCloseBracket(ip) {
-  return ip instanceof fbpPacket && ip.type === "close";
-}
-
-function fbpIp(value) {
-  return new fbpPacket("data", value);
 }
 
 function fbpNew(name) {
