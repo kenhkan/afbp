@@ -82,13 +82,44 @@ function fbpMain(mainPartName, partConstructors) {
 
 // Try to find things to do by going through the queues.
 function fbpLoop() {
-  // TODO:
+  var i, l, pin, part, pinName, pinIndex, main, ip, hasProcessedIps;
+
+  do {
+    // Assume there's no IP and invalidate if there is.
+    hasProcessedIps = false;
+
+    // Go through each Pin.
+    for (i = 0, l = fbpPins.length; i < l; i++) {
+      pin = fbpPins[i];
+      part = getTargetPart(pin);
+      // Caches
+      pinName = pin.name;
+      pinIndex = pin.index;
+      main = part.main;
+
+      // See if there's any IP.
+      while (pin.queue.length > 0) {
+        main(pinName, pinIndex, pin.shift());
+        // There's now more IP that has been processed!
+        hasProcessedIps = true;
+      }
+    }
+  // Only stop if this round has no more IPs.
+  } while (hasProcessedIps);
+
+  // TODO: somehow make sure this loop runs again on new events.
 }
 
 // Given a Pin, "walk" the pipeline and figure out which Part should be
 // activated upon IPs arriving at the given Pin's queue.
 function getTargetPart(pin) {
-  // TODO:
+  // Stop when there's no more Pin redirection.
+  while (pin.targetPin !== pin) {
+    pin = pin.targetPin;
+  }
+
+  // Then return the Part to which the Pin belongs.
+  return fbpParts[pin.partId];
 }
 
 
