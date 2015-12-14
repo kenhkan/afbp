@@ -142,8 +142,8 @@ function fbpPinCount(pinName) {
   return fbpParts[fbpCurrentPartId].pinCounts[pinName];
 }
 
-function fbpSend(pinName, pinIndex, ip) {
-  fbpPinsByName[fbpCurrentPartId][pinName][pinIndex].queue.push(ip);
+function fbpSend(partId, pinName, pinIndex, ip) {
+  fbpPinsByName[partId][pinName][pinIndex].queue.push(ip);
 
   // Sending an event triggers the loop, if not already running.
   if (!fbpIsLoopRunning) {
