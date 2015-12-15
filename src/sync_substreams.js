@@ -34,6 +34,7 @@ function main(pinName, pinIndex, value) {
       if (streamCount > 0) {
         queues[pinIndex][streamCount - 1].push(value);
       }
+    }
   }
 }
 
