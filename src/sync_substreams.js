@@ -5,13 +5,12 @@ var queues = [];
 // We need to keep track of the number of substream levels there is because we
 // only want to queue up the first level.
 var levels = [];
-for (var i = 0, l = fbpPinCount("in"); i < l; i++) {
-  queues[i] = [];
-  levels[i] = 0;
-  queueSizes[i] = 0;
-}
 
 function main(pinName, pinIndex, value) {
+  // Initialize if not already done so.
+  fbpSetUnlessDefined(queues, pinIndex, []);
+  fbpSetUnlessDefined(levels, pinIndex, 0);
+
   switch (pinName) {
   case "in":
     switch (value) {

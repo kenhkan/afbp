@@ -36,6 +36,13 @@ var c = [
 
 var i, l;
 
+fbpPipe(collate, "out", 0, output, "in", 0);
+
+// Piping to self is a safe way to set up a Pin for initial IPs.
+fbpPipe(collate, "in", 0, output, "in", 0);
+fbpPipe(collate, "in", 1, output, "in", 1);
+fbpPipe(collate, "in", 2, output, "in", 2);
+
 // Collate by the first three characters.
 for (i = 0, l = 3; i < l; i++) {
   fbpSend(collate, "collateBy", 0, new fbpPacket("data", i));
@@ -51,5 +58,3 @@ for (i = 0, l = b.length; i < l; i++) {
 for (i = 0, l = c.length; i < l; i++) {
   fbpSend(collate, "in", 2, c[i]);
 }
-
-fbpPipe(collate, "out", 0, output, "in", 0);

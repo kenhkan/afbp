@@ -9,16 +9,15 @@ var collateBy = [];
 // first two characters, and we're trying to match the second character,
 // `matchKey` would then be `[A, B]`.
 var matchKey = [];
-
 // Queues for incoming messages, indexed by the pin index. Each array element
 // is a queue for the corresponding pin.
-var queues = new Array(fbpPinCount("in"));
-for (i = 0, l = fbpPinCount("in"); i < l; i++) {
-  queues[i] = [];
-}
+var queues = []
 
 // TODO: value -> ip
 function main(pinName, pinIndex, value) {
+  // Initialize if not already done so.
+  fbpSetUnlessDefined(queues, pinIndex, []);
+
   switch (pinName) {
   case "collateBy":
     // TODO: If `value` is an array, it means we should collate "inward". e.g.
