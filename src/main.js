@@ -1,5 +1,8 @@
 // An example on how to use collate
 
+// Number of characters to collate by
+var nChar = 2;
+
 var collate = fbpNew("collate");
 var output = fbpNew("log");
 
@@ -17,8 +20,8 @@ var a = [
 ];
 var b = [
   fbpOpenBracket,
-  new fbpPacket("data", "111 B"),
-  new fbpPacket("data", "111 B"),
+  new fbpPacket("data", "011 B"),
+  new fbpPacket("data", "100 B"),
   new fbpPacket("data", "200 B"),
   new fbpPacket("data", "200 B"),
   new fbpPacket("data", "210 B"),
@@ -27,7 +30,7 @@ var b = [
 ];
 var c = [
   fbpOpenBracket,
-  new fbpPacket("data", "000 C"),
+  new fbpPacket("data", "100 C"),
   new fbpPacket("data", "200 C"),
   new fbpPacket("data", "200 C"),
   new fbpPacket("data", "204 C"),
@@ -38,13 +41,13 @@ var i, l;
 
 fbpPipe(collate, "out", 0, output, "in", 0);
 
-// Piping to self is a safe way to set up a Pin for initial IPs.
-fbpPipe(collate, "in", 0, output, "in", 0);
-fbpPipe(collate, "in", 1, output, "in", 1);
-fbpPipe(collate, "in", 2, output, "in", 2);
+// Prepare input Pins for sending initial IPs.
+fbpPipe(-1, "", -1, collate, "in", 0);
+fbpPipe(-1, "", -1, collate, "in", 1);
+fbpPipe(-1, "", -1, collate, "in", 2);
 
-// Collate by the first three characters.
-for (i = 0, l = 3; i < l; i++) {
+// Collate by the first n characters.
+for (i = 0, l = nChar; i < l; i++) {
   fbpSend(collate, "collateBy", 0, new fbpPacket("data", i));
 }
 

@@ -54,10 +54,10 @@ function flush() {
 
     for (j = 0, m = queue.length; j < m; j++) {
       // Send queue IP one-by-one to the corresponding pin index.
-      fbpSend(fbpCurrentPartId, "in", i, fbpPacket("data", queue[j]));
+      fbpSend(fbpCurrentPartId(), "in", i, fbpPacket("data", queue[j]));
     }
   }
 
   // Send an IP to signal that a substream has been released.
-  fbpSend(fbpCurrentPartId, "flushed", 0, fbpPacket("data", null));
+  fbpSend(fbpCurrentPartId(), "flushed", 0, fbpPacket("data", null));
 }

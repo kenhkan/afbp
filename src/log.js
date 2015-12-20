@@ -1,9 +1,9 @@
 // Print to IPs to screen, including the pin index on which they are received.
 
-function main(pinName, pinIndex, value) {
+function main(pinName, pinIndex, ip) {
   switch (pinName) {
   case "in":
-    switch (value) {
+    switch (ip) {
     case fbpOpenBracket:
       console.log("[" + pinIndex + "] Open Bracket");
       break;
@@ -13,7 +13,7 @@ function main(pinName, pinIndex, value) {
       break;
 
     default:
-      console.log("[" + pinIndex + "] Data: ", value);
+      console.log("[" + pinIndex + "] Data: ", ip.value);
     }
   }
 }

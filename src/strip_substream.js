@@ -7,22 +7,27 @@ var flattenBy = 1;
 // Levels so far
 var level = 0;
 
-function main(pinName, pinIndex, value) {
+function main(pinName, pinIndex, ip) {
   switch (pinName) {
   case "flattenBy":
     flattenBy = value;
     break;
 
   case "in":
-    switch (value) {
+    switch (ip) {
     case fbpOpenBracket:
       level++;
-      if (level < flattenBy) {
+      if (level <= flattenBy) {
         return;
       }
       break;
 
     case fbpCloseBracket:
+      // Send flush signal if we reach back the limit.
+      if (level === flattenBy) {
+        fbpSend(fbpCurrentPartId(), "flushed", pinIndex, new fbpPacket("data", null));
+      }
+
       level--;
       if (level < flattenBy) {
         return;
@@ -30,6 +35,6 @@ function main(pinName, pinIndex, value) {
       break;
     }
 
-    fbpSend("out", pinIndex, new fbpPacket("data", value));
+    fbpSend(fbpCurrentPartId(), "out", pinIndex, ip);
   }
 }
