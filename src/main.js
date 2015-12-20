@@ -1,39 +1,47 @@
 // An example on how to use collate
 
 // Number of characters to collate by
-var nChar = 2;
+var nChar = 3;
 
 var collate = fbpNew("collate");
 var output = fbpNew("log");
 
 var a = [
   fbpOpenBracket,
-  new fbpPacket("data", "111 A"),
-  new fbpPacket("data", "112 A"),
-  new fbpPacket("data", "112 A"),
-  new fbpPacket("data", "112 A"),
-  new fbpPacket("data", "200 A"),
-  new fbpPacket("data", "201 A"),
-  new fbpPacket("data", "201 A"),
-  new fbpPacket("data", "210 A"),
+  new fbpPacket("data", "1A1   M"),
+  new fbpPacket("data", "1A2   M"),
+  new fbpPacket("data", "1B4   M"),
+  new fbpPacket("data", "2A1   M"),
+  new fbpPacket("data", "2A2   M"),
+  new fbpPacket("data", "2B2   M"),
+  new fbpPacket("data", "2B3   M"),
+  new fbpPacket("data", "2B4   M"),
+  new fbpPacket("data", "2C1   M"),
   fbpCloseBracket
 ];
 var b = [
   fbpOpenBracket,
-  new fbpPacket("data", "011 B"),
-  new fbpPacket("data", "100 B"),
-  new fbpPacket("data", "200 B"),
-  new fbpPacket("data", "200 B"),
-  new fbpPacket("data", "210 B"),
-  new fbpPacket("data", "220 B"),
+  new fbpPacket("data", "1A1   D"),
+  new fbpPacket("data", "1A1   D"),
+  new fbpPacket("data", "1A1   D"),
+  new fbpPacket("data", "1A2   D"),
+  new fbpPacket("data", "1A2   D"),
+  new fbpPacket("data", "1B4   D"),
+  new fbpPacket("data", "1B4   D"),
+  new fbpPacket("data", "1B5   D"),
+  new fbpPacket("data", "2A2   D"),
+  new fbpPacket("data", "2A2   D"),
+  new fbpPacket("data", "2B2   D"),
+  new fbpPacket("data", "2B2   D"),
+  new fbpPacket("data", "2B4   D"),
+  new fbpPacket("data", "2C1   D"),
+  new fbpPacket("data", "2C1   D"),
+  new fbpPacket("data", "2D1   D"),
+  new fbpPacket("data", "2D2   D"),
   fbpCloseBracket
 ];
 var c = [
   fbpOpenBracket,
-  new fbpPacket("data", "100 C"),
-  new fbpPacket("data", "200 C"),
-  new fbpPacket("data", "200 C"),
-  new fbpPacket("data", "204 C"),
   fbpCloseBracket
 ];
 
