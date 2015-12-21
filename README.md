@@ -21,6 +21,13 @@ developing such a system:
   Frameworks](http://www.researchgate.net/publication/224684025_Software_Architecture_with_Visual_Frameworks)
 
 
+## Usage
+
+1. `make clean`
+2. `make`
+3. Open `bin/index.html` in your browser.
+
+
 ## Differences from classic FBP
 
 This section highlights the differences between the de facto specification of
