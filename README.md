@@ -5,15 +5,15 @@ NOTE: This is a work-in-progress.
 This document is intended to be a specification (i.e. not "the" specification)
 of a variant of [Flow-based Programming](http://www.jpaulmorrison.com/fbp/)
 (FBP), that is completely asynchronous, tentatively named AFBP in this document
-for short. The idea is explored by Paul Tarvydas and Norm Sanford.
+for short. The idea is explored by Paul Tarvydas.
 
 A completely asynchronous FBP variant is preferred in environments where
 processes and preemption are not supported, i.e. it is single-threaded, which
 is a requirement in web browsers and other environments without an "operating
 system".
 
-The two papers by Tarvydas and Sanford explain the motivations and design of
-developing such a system:
+The two papers by Tarvydas explain the motivations and design of developing
+such a system:
 
 * [Software architecture using fine-grained event-driven reactive
   components](http://www.researchgate.net/publication/220796260_Software_architecture_using_fine-grained_event-driven_reactive_components)
