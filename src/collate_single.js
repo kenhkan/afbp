@@ -14,17 +14,16 @@ var queues = []
 // multiple times, so keeping a count doesn't work.
 var emptyQueues = [];
 
-// TODO: value -> ip
-function main(pinName, pinIndex, value) {
+function main(pinName, pinIndex, ip) {
   // Initialize if not already done so.
   fbpSetUnlessDefined(queues, pinIndex, []);
 
   switch (pinName) {
   case "collateBy":
-    // TODO: If `value` is an array, it means we should collate "inward". e.g.
-    // `["person", "name", "first"]` would collate by the "first" attribute of
-    // the "name" property of the "person" property of the incoming IPs.
-    collateBy.push(value.value);
+    // TODO: If `value` is an array, it means we should collate all of the
+    // array items as a group. For instance, `[0, 1, 2]` would collate the
+    // first three radices/properties as a bracketed group.
+    collateBy.push(ip.value);
     break;
 
   case "flush":
@@ -35,7 +34,7 @@ function main(pinName, pinIndex, value) {
     // We need to queue up inputs because it could be the case that all IPs
     // from the first pin are lexigraphically smaller than those from other
     // pins and/or arrive before others.
-    queues[pinIndex].push(value);
+    queues[pinIndex].push(ip);
     break;
   }
 }
@@ -160,7 +159,7 @@ function countDefined(array) {
 }
 
 function flushQueues() {
-  var i, l, queue, value, isMatching, queueIndex_;
+  var i, l, queue, ip, isMatching, queueIndex_;
   // Determine the initial queue to run.
   var queueIndex = findNextQueueIndex();
 
@@ -199,14 +198,14 @@ function flushQueues() {
     }
 
     // Match as many IPs as possible.
-    while ((value = queue.shift()) !== void 0) {
+    while ((ip = queue.shift()) !== void 0) {
       // We have a complete match, send the IP out!
-      if (matchForCollationKey(value.value)) {
-        fbpSend(fbpCurrentPartId(), "out", 0, value);
+      if (matchForCollationKey(ip.value)) {
+        fbpSend(fbpCurrentPartId(), "out", 0, ip);
 
       // No match. We needed to look ahead, so put the item back and stop.
       } else {
-        queue.unshift(value);
+        queue.unshift(ip);
         break;
       }
     }
